@@ -1,0 +1,14 @@
+CMAKE_MINIMUM_REQUIRED( VERSION 2.8 )
+
+PROJECT( OCCTestbed )
+
+SET( OCC_DEBUG	 					ON CACHE BOOL "sets debug flags for compilation" )
+
+IF( OCC_DEBUG )
+	ADD_DEFINITIONS( -DOCC_DEBUG )
+ENDIF()
+
+SET( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake_modules/" )
+
+ADD_SUBDIRECTORY( "MakeBottle" )
+
