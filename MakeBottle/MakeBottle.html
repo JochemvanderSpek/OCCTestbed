@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<meta http-equiv="no-cache">
+	<meta http-equiv="Expires" content="-1">
+	<meta http-equiv="Cache-Control" content="no-cache">
+
+	<head>
+		<title>Borges</title>
+
+		<script type="text/javascript" >
+
+			var flagsRequired = 2;
+			var flagsCounter = 0;
+
+			initBody = function(){
+				flagsCounter++;
+				checkFlags();
+			}
+
+			initModule = function(){
+				flagsCounter++;
+				checkFlags();
+			}
+
+			checkFlags = function(){
+				if( flagsCounter === flagsRequired ){
+			    var main = Module.cwrap( 'main' );
+			    main();
+				}
+			}
+
+			var Module = {
+				memoryInitializerPrefixURL:"../lib/",
+				onRuntimeInitialized:function(){
+					initModule();
+				}
+			}
+		</script>
+		<script src="../lib/MakeBottle.js" type="text/javascript" ></script>
+	</head>
+	
+	<body onload="initBody();">
+
+		<canvas id="canvas" width="1000" height="1000"></canvas>
+
+		<script type="text/javascript">
+		</script>
+	</body>
+
+</html>

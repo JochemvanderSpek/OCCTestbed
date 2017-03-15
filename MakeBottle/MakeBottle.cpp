@@ -7,6 +7,8 @@
 #include <BRepBuilderAPI_MakeWire.hxx>
 #include <BRepBuilderAPI_Transform.hxx>
 
+#include <GeomAPI_ProjectPointOnSurf.hxx>
+
 #include <BRepFilletAPI_MakeFillet.hxx>
 
 #include <BRepLib.hxx>
@@ -191,6 +193,30 @@ MakeBottle(const Standard_Real myWidth, const Standard_Real myHeight,
 
 int main( int argc, char ** argv ){
   TopoDS_Shape s = MakeBottle( 10.0, 10.0, 2.0 );
+  std::cout << "made bottle\n";
+
+  TopExp_Explorer exFace;
+  for( exFace.Init(s, TopAbs_FACE); exFace.More(); exFace.Next()) {
+    TopoDS_Face face = TopoDS::Face(exFace.Current());
+
+    // get the triangulation
+    TopLoc_Location loc;
+    Handle(Poly_Triangulation) tri = BRep_Tool::Triangulation(face, loc);
+    std::cout << "triangulating face :" << tri.IsNull() << "\n";
+//    if (tri.IsNull()) continue;
+
+    // create a transformation from the location
+    gp_Trsf xloc = loc;
+
+    // get the nodes
+    const TColgp_Array1OfPnt &nodes = tri->Nodes();
+    Standard_Real x,y,z;
+    nodes(0).Coord(x,y,z);
+
+    std::cout << "x:" << x << " y:" << y << " z:" << z << "\n";
+
+  }
+
   return( 0 );
 }
 
